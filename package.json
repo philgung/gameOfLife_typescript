@@ -4,7 +4,7 @@
   "description": "Game of life",
   "main": "index.js",
   "scripts": {
-    "test": "npx jest"
+    "test": "npx jest --watch"
   },
   "author": "",
   "license": "ISC",
