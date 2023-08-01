@@ -1,0 +1,17 @@
+{
+  "name": "gameoflife",
+  "version": "1.0.0",
+  "description": "Game of life",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx jest"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jest": "^29.5.3",
+    "ts-jest": "^29.1.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.1.6"
+  }
+}
