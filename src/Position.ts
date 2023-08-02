@@ -1,5 +1,6 @@
 ﻿export class Position {
-    private _grid : string [][];
+    private readonly _grid: string [][];
+
     constructor(initial: string) {
         let rows = initial.split('\n');
         this._grid = [[]];
@@ -7,18 +8,14 @@
             this._grid[index] = [...row].map(cell => cell);
         });
     }
-    
-    toString():string{
+
+    toString(): string {
         let result = '';
         this._grid.forEach((row, index, array) => {
-           if (index === array.length - 1){
-               result += `${row.join('')}`;
-           }
-           else{
-               result += `${row.join('')}\n`;
-           }
+            result += `${row.join('')}${this.newLine(index, array)}`;
         });
         return result;
     }
 
+    private newLine:Function =(index: number, array: string[][]) =>  index !== array.length - 1 ? '\n': '';
 }
