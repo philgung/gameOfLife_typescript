@@ -1,9 +1,10 @@
-﻿
+﻿import {Position} from "./Position";
+
 // Cell 
 //      (live/dead)
 //      Neighbours (cells)
 
-// Grid of cells
+// GameOfLife
 //      Import Starting Position (ctor ??)
 //      Generate -> next Position
 //      Current : Position
@@ -12,9 +13,17 @@
 //      Display output
 //      override equals ?
 
-export function generate(startingPosition: string): string {
-    return `........
+export class GameOfLife {
+    private _current: Position;
+    constructor(initial: Position) {
+        this._current = initial;
+    }
+
+    Generate(): Position {
+        return new Position(
+            `........
             ...**...
             ...**...
-            ........`;
+            ........`);
+    }
 }

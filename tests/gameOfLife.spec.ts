@@ -1,23 +1,28 @@
-﻿import {generate} from "../src/gameOfLife";
+﻿import {GameOfLife} from "../src/gameOfLife";
+import {Position} from "../src/Position";
+
+
 
 describe('GameOfLife - Acceptance tests', () => {
    
     it('Generation 1 -> Generation 2', () => {
-        const startingPosition =
+        const initial =
+            new Position(
+                `........
+                    ....*...
+                    ...**...
+                    ........`);
+        
+        let game = new GameOfLife(initial);        
+        const next = game.Generate();
+        
+        const output =
             `........
-            ....*...
+            ...**...
             ...**...
             ........`;
-        
-        const nextPosition = generate(startingPosition);
-        
-        const outputPosition =
-            `........
-            ...**...
-            ...**...
-            ........`;
-        expect(nextPosition).toBe(outputPosition);
-   }) 
+        expect(next.toString()).toBe(output);
+   }); 
 });
 
 
