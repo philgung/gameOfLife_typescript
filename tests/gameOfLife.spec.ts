@@ -1,10 +1,7 @@
 ﻿import {GameOfLife} from "../src/gameOfLife";
 import {Position} from "../src/Position";
 
-
-
-describe('GameOfLife - Acceptance tests', () => {
-   
+describe('GameOfLife - Acceptance tests', () => {   
     it('Generation 1 -> Generation 2', () => {
         const initial =
             new Position(
@@ -16,12 +13,12 @@ describe('GameOfLife - Acceptance tests', () => {
         let game = new GameOfLife(initial);        
         const next = game.Generate();
         
-        const output =
+        const expectedOutput =
             `........
             ...**...
             ...**...
             ........`;
-        expect(next.toString()).toBe(output);
+        expect(next.toString()).toBe(expectedOutput);
    }); 
 });
 

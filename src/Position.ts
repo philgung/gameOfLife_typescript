@@ -1,12 +1,24 @@
 ﻿export class Position {
-    private readonly _position: string;
-
+    private _grid : string [][];
     constructor(initial: string) {
-        this._position = initial;
+        let rows = initial.split('\n');
+        this._grid = [[]];
+        rows.forEach((row, index) => {
+            this._grid[index] = [...row].map(cell => cell);
+        });
     }
     
-    public toString():string{
-        return this._position;
+    toString():string{
+        let result = '';
+        this._grid.forEach((row, index, array) => {
+           if (index === array.length - 1){
+               result += `${row.join('')}`;
+           }
+           else{
+               result += `${row.join('')}\n`;
+           }
+        });
+        return result;
     }
 
 }

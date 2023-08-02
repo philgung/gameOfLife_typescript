@@ -5,12 +5,8 @@
 //      Neighbours (cells)
 
 // GameOfLife
-//      Import Starting Position (ctor ??)
-//      Generate -> next Position
-//      Current : Position
 
 // Position (immutable)
-//      Display output
 //      override equals ?
 
 export class GameOfLife {
