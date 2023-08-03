@@ -1,4 +1,4 @@
-﻿import {Position, PositionParser} from "./Position";
+﻿import {Position, Cell} from "./Position";
 
 export class GameOfLife {
     private _current: Position;
@@ -7,8 +7,12 @@ export class GameOfLife {
     }
 
     Generate(): Position {
-        return PositionParser.parse(`...
-        ...
-        ...`);
+        let board : Cell[][] = [[]];
+        // TODO : how to navigate in board ? double foreach ? recursive function ? or else ?
+        
+        return new Position(
+            [[Cell.DeadCell, Cell.DeadCell, Cell.DeadCell],
+            [Cell.DeadCell, Cell.DeadCell, Cell.DeadCell],
+            [Cell.DeadCell, Cell.DeadCell, Cell.DeadCell]]);
     }
 }

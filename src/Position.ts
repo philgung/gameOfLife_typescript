@@ -3,9 +3,9 @@
 // Position (immutable)
 //      override equals ?
 //      GetNeighbours(cell):cells
-class Cell {
+export class Cell {
     private readonly _status: string;
-
+    static DeadCell = new Cell('.');
     constructor(cell: string) {
         this._status = cell;
     }
