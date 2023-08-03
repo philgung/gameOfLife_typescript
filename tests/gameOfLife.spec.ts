@@ -1,16 +1,13 @@
 ﻿import {GameOfLife} from "../src/gameOfLife";
-import {Position} from "../src/Position";
+import {PositionParser} from "../src/Position";
 
 describe('GameOfLife - Acceptance tests', () => {
     it('Generation 1 -> Generation 2', () => {
-        const initial =
-            new Position(
-                `........
-            ....*...
-            ...**...
-            ........`);
-
-        let game = new GameOfLife(initial);
+        let game = initializeGame(`........
+        ....*...
+        ...**...
+        ........`);
+        
         const next = game.Generate();
 
         const expectedOutput =
@@ -29,44 +26,39 @@ describe('Any live cell with fewer than two live neighbours dies, as if caused b
             ...`;
 
     it('A live cell with none live neighbours has to die', () => {
-        const initial =
-            new Position(
-                `...
-                    .*.
-                    ...`);
-
-        let game = new GameOfLife(initial);
+        let game = initializeGame(`...
+                .*.
+                ...`);
+        
         const next = game.Generate();
 
         expect(next.toString()).toBe(allCellsDied);
     });
     it('A live cell with one live neighbour has to die', () => {
-        const initial =
-            new Position(
-                `...
-                    .**
-                    ...`);
-
-        let game = new GameOfLife(initial);
+        let game = initializeGame(`...
+                .**
+                ...`);
+        
         const next = game.Generate();
 
         expect(next.toString()).toBe(allCellsDied);
     });
-    it.skip('A live cell with two live neighbours has to live', () => {
-        const initial =
-            new Position(
-                `...
-                    ***
-                    ...`);
-
-        let game = new GameOfLife(initial);
+    it('A live cell with two live neighbours has to live', () => {
+        let game = initializeGame(`...
+                ***
+                ...`);
+        
         const next = game.Generate();
+        
         expect(next.toString()).toBe(
             `...
             .*.
             ...`);
     });
 })
+
+const initializeGame : Function = (initial:string): GameOfLife => 
+    new GameOfLife(PositionParser.parse(initial));
 
 // Any live cell with more than three live neighbours dies, as if by overcrowding.
 // Any live cell with two or three live neighbours lives on to the next generation.

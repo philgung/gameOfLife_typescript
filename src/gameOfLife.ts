@@ -1,4 +1,4 @@
-﻿import {Position} from "./Position";
+﻿import {Position, PositionParser} from "./Position";
 
 export class GameOfLife {
     private _current: Position;
@@ -7,9 +7,8 @@ export class GameOfLife {
     }
 
     Generate(): Position {
-        return new Position(
-            `...
-            ...
-            ...`);
+        return PositionParser.parse(`...
+        ...
+        ...`);
     }
 }

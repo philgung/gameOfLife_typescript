@@ -5,24 +5,32 @@
 //      GetNeighbours(cell):cells
 class Cell {
     private readonly _status: string;
+
     constructor(cell: string) {
         this._status = cell;
     }
 
     toString(): string {
-       return this._status; 
+        return this._status;
+    }
+}
+
+export class PositionParser {
+    static parse(positionInput: string): Position {
+        let rows = positionInput.split('\n');
+        let grid: Cell[][] = [[]];
+        rows.forEach((row, index) => {
+            grid[index] = [...(row.trim())].map(cell => new Cell(cell));
+        });
+        return new Position(grid);
     }
 }
 
 export class Position {
     private readonly _grid: Cell [][];
 
-    constructor(initial: string) {
-        let rows = initial.split('\n');
-        this._grid = [[]];
-        rows.forEach((row, index) => {
-            this._grid[index] = [...(row.trim())].map(cell => new Cell(cell));
-        });
+    constructor(initial: Cell[][]) {
+        this._grid = initial;
     }
 
     toString(): string {
@@ -31,7 +39,8 @@ export class Position {
             result += `${this.prefix(index)}${row.join('')}${this.suffix(index, array)}`;
         });
         return result;
-    }   
-    private prefix:Function = (index : number) => index === 0 ? '':' '.repeat(12);
-    private suffix:Function =(index: number, array: string[][]) =>  index !== array.length - 1 ? '\n': '';
+    }
+
+    private prefix: Function = (index: number) => index === 0 ? '' : ' '.repeat(12);
+    private suffix: Function = (index: number, array: string[][]) => index !== array.length - 1 ? '\n' : '';
 }
