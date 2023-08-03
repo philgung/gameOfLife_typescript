@@ -23,6 +23,11 @@ describe('GameOfLife - Acceptance tests', () => {
 });
 
 describe('Any live cell with fewer than two live neighbours dies, as if caused by underpopulation.', () => {
+    const allCellsDied =
+        `...
+            ...
+            ...`;
+
     it('A live cell with none live neighbours has to die', () => {
         const initial =
             new Position(
@@ -33,11 +38,33 @@ describe('Any live cell with fewer than two live neighbours dies, as if caused b
         let game = new GameOfLife(initial);
         const next = game.Generate();
 
-        const expectedOutput =
+        expect(next.toString()).toBe(allCellsDied);
+    });
+    it('A live cell with one live neighbour has to die', () => {
+        const initial =
+            new Position(
+                `...
+                    .**
+                    ...`);
+
+        let game = new GameOfLife(initial);
+        const next = game.Generate();
+
+        expect(next.toString()).toBe(allCellsDied);
+    });
+    it.skip('A live cell with two live neighbours has to live', () => {
+        const initial =
+            new Position(
+                `...
+                    ***
+                    ...`);
+
+        let game = new GameOfLife(initial);
+        const next = game.Generate();
+        expect(next.toString()).toBe(
             `...
-            ...
-            ...`;
-        expect(next.toString()).toBe(expectedOutput);
+            .*.
+            ...`);
     });
 })
 

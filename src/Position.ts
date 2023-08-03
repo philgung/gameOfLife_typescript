@@ -1,8 +1,8 @@
 ﻿// Cell 
 //      (live/dead)
-//      Neighbours (cells)
 // Position (immutable)
 //      override equals ?
+//      GetNeighbours(cell):cells
 class Cell {
     private readonly _status: string;
     constructor(cell: string) {
