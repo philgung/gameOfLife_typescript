@@ -1,4 +1,4 @@
-﻿import {Position, Cell} from "./Position";
+﻿import {Cell, Position} from "./Position";
 
 export class GameOfLife {
     private _current: Position;
@@ -8,11 +8,19 @@ export class GameOfLife {
 
     Generate(): Position {
         let board : Cell[][] = [[]];
-        // TODO : how to navigate in board ? double foreach ? recursive function ? or else ?
-        
-        return new Position(
-            [[Cell.DeadCell, Cell.DeadCell, Cell.DeadCell],
-            [Cell.DeadCell, Cell.DeadCell, Cell.DeadCell],
-            [Cell.DeadCell, Cell.DeadCell, Cell.DeadCell]]);
+        this._current.GetCells().forEach((rows, index) => {
+            board.push(this.getRowFromBoard(rows));
+        });
+        return new Position(board);
+    }
+
+    private getRowFromBoard(rows: Cell[]): Cell[] {
+        return rows.map(cell => {
+            if (cell.isAlive() && this._current.hasFewerThanTwoLiveNeighbours(cell)) {
+                return Cell.DeadCell;
+            } else {
+                return cell;
+            }
+        });
     }
 }
