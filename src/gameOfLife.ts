@@ -16,7 +16,7 @@ export class GameOfLife {
 
     private getRowFromBoard(rows: Cell[]): Cell[] {
         return rows.map(cell => {
-            if (cell.isAlive() && this._current.hasFewerThanTwoLiveNeighbours(cell)) {
+            if (cell.isAlive() && this._current.hasFewerThanTwoLiveNeighboors(cell)) {
                 return Cell.DeadCell;
             } else {
                 return cell;

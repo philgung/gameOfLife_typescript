@@ -57,10 +57,18 @@ export class Position {
         return this._board;
     }
 
-    hasFewerThanTwoLiveNeighbours(cell: Cell): boolean {
-        // find cell in board
-        // find out neighbours
-        // return live neighbours < 2
+    hasFewerThanTwoLiveNeighboors(cell: Cell): boolean {
+        this._board.forEach((row, rowIndex) => {
+            row.forEach((cellFromRow, columnIndex) =>{
+               if (cellFromRow.identifier == cell.identifier){
+                   let neighboors:Cell[] = [
+                       this._board[rowIndex - 1][columnIndex - 1],this._board[rowIndex - 1][columnIndex], this._board[rowIndex - 1][columnIndex + 1],
+                       this._board[rowIndex][columnIndex - 1], this._board[rowIndex][columnIndex + 1],
+                       this._board[rowIndex + 1][columnIndex - 1],this._board[rowIndex + 1][columnIndex], this._board[rowIndex + 1][columnIndex + 1]];
+                   return neighboors.filter(neighboor => neighboor?.isAlive()).length < 2;
+               } 
+            });
+        });
         return false;
     }
 }
