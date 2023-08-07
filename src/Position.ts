@@ -51,9 +51,6 @@ export class Position {
         return result;
     }
 
-    private prefix: Function = (index: number) => index == 0 ? '' : ' '.repeat(12);
-    private suffix: Function = (index: number, array: string[][]) => index !== array.length - 1 ? '\n' : '';
-
     GetCells(): Cell[][] {
         return this._board;
     }
@@ -62,12 +59,40 @@ export class Position {
         return this._board.some((row, rowIndex) => {
             let columnIndex = row.findIndex(cellFromRow => cellFromRow.identifier == cell.identifier);
             if (columnIndex != -1) {
-                let neighboors: Cell[] = [
-                    this._board[rowIndex - 1][columnIndex - 1], this._board[rowIndex - 1][columnIndex], this._board[rowIndex - 1][columnIndex + 1],
-                    this._board[rowIndex][columnIndex - 1], this._board[rowIndex][columnIndex + 1],
-                    this._board[rowIndex + 1][columnIndex - 1], this._board[rowIndex + 1][columnIndex], this._board[rowIndex + 1][columnIndex + 1]];
-                return neighboors.filter(neighboor => neighboor?.isAlive()).length < 2;
+                return this.getNeighboors(rowIndex, columnIndex)
+                    .filter(neighboor => neighboor?.isAlive()).length < 2;
             }
         });
     }
+    
+    private getNeighboors(row:number, column:number): Cell[]{
+        if (row < 0 || column < 0) return [];
+
+        let neighboors: Cell[] = [];
+        if (row >= 1){
+            if (column >= 1){
+                neighboors.push(this._board[row-1][column-1]);
+            }
+            neighboors.push(this._board[row-1][column]);
+            neighboors.push(this._board[row-1][column+1]);
+        }
+        if (column >= 1){
+            neighboors.push(this._board[row][column-1]);
+            if (row < this._board.length - 1){
+                neighboors.push(this._board[row+1][column-1]);
+            }
+        }
+        if (row < this._board.length - 1) {
+            neighboors.push(this._board[row + 1][column]);
+        }
+        neighboors.push(this._board[row][column+1]);
+        if (row < this._board.length - 1) {
+            neighboors.push(this._board[row + 1][column + 1]);
+        }
+        
+        return neighboors;
+    }
+
+    private prefix: Function = (index: number) => index == 0 ? '' : ' '.repeat(12);
+    private suffix: Function = (index: number, array: string[][]) => index !== array.length - 1 ? '\n' : '';
 }
