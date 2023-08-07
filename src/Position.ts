@@ -1,10 +1,5 @@
 ﻿import {v4 as uuidv4} from 'uuid';
 
-// Cell 
-//      (live/dead)
-// Position (immutable)
-//      override equals ?
-//      GetNeighbours(cell):cells
 export class Cell {
     private readonly _status: string;
     readonly identifier: string;
@@ -60,30 +55,24 @@ export class Position {
     }
 
     hasFewerThanTwoLiveNeighboors(cell: Cell): boolean {
-        return this._board.some((row, rowIndex) => {
-            let columnIndex = row.findIndex(cellFromRow => cellFromRow.identifier == cell.identifier);
-            if (columnIndex != -1) {
-                return this.getNeighboors(rowIndex, columnIndex)
-                    .filter(neighboor => neighboor?.isAlive()).length < 2;
-            }
-        });
+        return this.findCellAndApplyToNeighboors(cell, neighboors =>
+            neighboors.filter(neighboor => neighboor?.isAlive()).length < 2);
     }
     hasExactlyThreeLiveNeighboors(cell: Cell): boolean {
-        return this._board.some((row, rowIndex) => {
-            let columnIndex = row.findIndex(cellFromRow => cellFromRow.identifier == cell.identifier);
-            if (columnIndex != -1) {
-                return this.getNeighboors(rowIndex, columnIndex)
-                    .filter(neighboor => neighboor?.isAlive()).length == 3;
-            }
-        });
+        return this.findCellAndApplyToNeighboors(cell, neighboors =>
+            neighboors.filter(neighboor => neighboor?.isAlive()).length == 3);
     }
 
     hasMoreThanThreeLiveNeighboors(cell: Cell) {
+        return this.findCellAndApplyToNeighboors(cell, neighboors => 
+            neighboors.filter(neighboor => neighboor?.isAlive()).length > 3);
+    }
+   
+    private findCellAndApplyToNeighboors(cell:Cell, predicate:PredicateType):boolean{
         return this._board.some((row, rowIndex) => {
             let columnIndex = row.findIndex(cellFromRow => cellFromRow.identifier == cell.identifier);
             if (columnIndex != -1) {
-                return this.getNeighboors(rowIndex, columnIndex)
-                    .filter(neighboor => neighboor?.isAlive()).length > 3;
+                return predicate(this.getNeighboors(rowIndex, columnIndex));
             }
         });
     }
@@ -119,3 +108,5 @@ export class Position {
 
     private suffix: Function = (index: number, array: string[][]) => index !== array.length - 1 ? '\n' : '';
 }
+
+type PredicateType = (cell:Cell[]) => boolean;

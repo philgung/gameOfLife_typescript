@@ -67,3 +67,6 @@ Generation 3
 ..*.*...
 ...**...
 ````
+
+
+[Game of life generation generator](https://beltoforion.de/en/game_of_life/)
