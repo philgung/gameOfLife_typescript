@@ -9,6 +9,7 @@ export class Cell {
     private readonly _status: string;
     readonly identifier: string;
     static DeadCell = new Cell('.');
+    static AliveCell = new Cell('*');
     constructor(cell: string) {
         this._status = cell;
         this.identifier = uuidv4();
@@ -50,7 +51,7 @@ export class Position {
         return result;
     }
 
-    private prefix: Function = (index: number) => index === 0 ? '' : ' '.repeat(12);
+    private prefix: Function = (index: number) => index == 0 ? '' : ' '.repeat(12);
     private suffix: Function = (index: number, array: string[][]) => index !== array.length - 1 ? '\n' : '';
 
     GetCells(): Cell[][] {
@@ -58,17 +59,15 @@ export class Position {
     }
 
     hasFewerThanTwoLiveNeighboors(cell: Cell): boolean {
-        this._board.forEach((row, rowIndex) => {
-            row.forEach((cellFromRow, columnIndex) =>{
-               if (cellFromRow.identifier == cell.identifier){
-                   let neighboors:Cell[] = [
-                       this._board[rowIndex - 1][columnIndex - 1],this._board[rowIndex - 1][columnIndex], this._board[rowIndex - 1][columnIndex + 1],
-                       this._board[rowIndex][columnIndex - 1], this._board[rowIndex][columnIndex + 1],
-                       this._board[rowIndex + 1][columnIndex - 1],this._board[rowIndex + 1][columnIndex], this._board[rowIndex + 1][columnIndex + 1]];
-                   return neighboors.filter(neighboor => neighboor?.isAlive()).length < 2;
-               } 
-            });
+        return this._board.some((row, rowIndex) => {
+            let columnIndex = row.findIndex(cellFromRow => cellFromRow.identifier == cell.identifier);
+            if (columnIndex != -1) {
+                let neighboors: Cell[] = [
+                    this._board[rowIndex - 1][columnIndex - 1], this._board[rowIndex - 1][columnIndex], this._board[rowIndex - 1][columnIndex + 1],
+                    this._board[rowIndex][columnIndex - 1], this._board[rowIndex][columnIndex + 1],
+                    this._board[rowIndex + 1][columnIndex - 1], this._board[rowIndex + 1][columnIndex], this._board[rowIndex + 1][columnIndex + 1]];
+                return neighboors.filter(neighboor => neighboor?.isAlive()).length < 2;
+            }
         });
-        return false;
     }
 }

@@ -7,8 +7,8 @@ export class GameOfLife {
     }
 
     Generate(): Position {
-        let board : Cell[][] = [[]];
-        this._current.GetCells().forEach((rows, index) => {
+        let board : Cell[][] = [];
+        this._current.GetCells().forEach((rows) => {
             board.push(this.getRowFromBoard(rows));
         });
         return new Position(board);
@@ -17,7 +17,7 @@ export class GameOfLife {
     private getRowFromBoard(rows: Cell[]): Cell[] {
         return rows.map(cell => {
             if (cell.isAlive() && this._current.hasFewerThanTwoLiveNeighboors(cell)) {
-                return Cell.DeadCell;
+                return new Cell('.');
             } else {
                 return cell;
             }
