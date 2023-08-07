@@ -27,7 +27,7 @@ describe('Any live cell with fewer than two live neighbours dies, as if caused b
             ...
             ...`;
 
-    it('A live cell with none live neighbours has to die', () => {
+    it('A live cell with none live neighboors has to die', () => {
         let game = initializeGame(`...
                 .*.
                 ...`);
@@ -36,7 +36,7 @@ describe('Any live cell with fewer than two live neighbours dies, as if caused b
 
         expect(next.toString()).toBe(allCellsDied);
     });
-    it('A live cell with one live neighbour has to die', () => {
+    it('A live cell with one live neighboor has to die', () => {
         let game = initializeGame(`...
                 .**
                 ...`);
@@ -45,30 +45,29 @@ describe('Any live cell with fewer than two live neighbours dies, as if caused b
 
         expect(next.toString()).toBe(allCellsDied);
     });
-    it('A live cell with two live neighbours has to live', () => {
+    it('A live cell with two live neighboors has to live', () => {
         let game = initializeGame(`...
                 ***
                 ...`);
         
         const next = game.Generate();
         expect(next.toString()).toBe(
-            `...
+            `.*.
             .*.
-            ...`);
+            .*.`);
     });
 });
 
-describe('Any dead cell with exactly three live neighbours becomes a live cell.', () => {
-    it('A dead cell with three live neighbours has to become a live cell', () => {
+describe('Any dead cell with exactly three live neighboors becomes a live cell.', () => {
+    it('A dead cell with three live neighboors has to become a live cell', () => {
         let game = initializeGame(`..*
                 *..
                 .*.`);
 
         const next = game.Generate();
-        console.log(`${next.toString()}`);
         expect(next.toString()).toBe(`...
-                .*.
-                ...`);
+            .*.
+            ...`);
     });
 
 });

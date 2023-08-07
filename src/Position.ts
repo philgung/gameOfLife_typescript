@@ -22,6 +22,10 @@ export class Cell {
     isAlive(): boolean {
         return this._status == '*';
     }
+
+    isDead() {
+        return !this.isAlive();
+    }
 }
 
 export class PositionParser {
@@ -64,7 +68,16 @@ export class Position {
             }
         });
     }
-    
+    hasExactlyThreeLiveNeighboors(cell: Cell): boolean {
+        return this._board.some((row, rowIndex) => {
+            let columnIndex = row.findIndex(cellFromRow => cellFromRow.identifier == cell.identifier);
+            if (columnIndex != -1) {
+                return this.getNeighboors(rowIndex, columnIndex)
+                    .filter(neighboor => neighboor?.isAlive()).length == 3;
+            }
+        });
+    }
+
     private getNeighboors(row:number, column:number): Cell[]{
         if (row < 0 || column < 0) return [];
 
@@ -92,7 +105,7 @@ export class Position {
         
         return neighboors;
     }
-
     private prefix: Function = (index: number) => index == 0 ? '' : ' '.repeat(12);
+
     private suffix: Function = (index: number, array: string[][]) => index !== array.length - 1 ? '\n' : '';
 }

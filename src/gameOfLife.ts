@@ -2,12 +2,13 @@
 
 export class GameOfLife {
     private _current: Position;
+
     constructor(initial: Position) {
         this._current = initial;
     }
 
     Generate(): Position {
-        let board : Cell[][] = [];
+        let board: Cell[][] = [];
         this._current.GetCells().forEach((rows) => {
             board.push(this.getRowFromBoard(rows));
         });
@@ -18,6 +19,8 @@ export class GameOfLife {
         return rows.map(cell => {
             if (cell.isAlive() && this._current.hasFewerThanTwoLiveNeighboors(cell)) {
                 return new Cell('.');
+            } else if (cell.isDead() && this._current.hasExactlyThreeLiveNeighboors(cell)) {
+                return new Cell('*');
             } else {
                 return cell;
             }
