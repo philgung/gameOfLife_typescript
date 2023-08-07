@@ -11,7 +11,6 @@ describe('GameOfLife - Acceptance tests', () => {
         
         const next = game.Generate();
 
-        //console.log(`${next.toString()}`);
         const expectedOutput =
             `........
             ...**...
@@ -19,6 +18,32 @@ describe('GameOfLife - Acceptance tests', () => {
             ........`;
         expect(next.toString()).toBe(expectedOutput);
     });
+
+    it('Generation 1 -> Generation 3 (Glider)', () => {
+        let game = initializeGame(
+       `...*....
+        ....*...
+        ..***...
+        ........`);
+
+        const generation2 = game.Generate();
+        const expectedOutput2 =
+            `........
+            ..*.*...
+            ...**...
+            ...*....`;
+        expect(generation2.toString()).toBe(expectedOutput2);
+        
+        const generation3 = game.Generate();
+        //console.log(`generation3|${generation3.toString()}|`);
+        const expectedOutput =
+            `........
+            ....*...
+            ..*.*...
+            ...**...`;
+        expect(generation3.toString()).toBe(expectedOutput);
+    });
+
 });
 
 describe('Any live cell with fewer than two live neighbours dies, as if caused by underpopulation.', () => {
@@ -72,10 +97,25 @@ describe('Any dead cell with exactly three live neighboors becomes a live cell.'
 
 });
 
+describe('Any live cell with more than three live neighboors dies, as if by overcrowding.', ()=>{
+    it('A live cell with four live neigboors has to die', ()=> {
+        let game = initializeGame(
+               `..*
+                **.
+                .**`);
+
+        const next = game.Generate();
+        console.log(`|${next.toString()}|`);
+        expect(next.toString()).toBe(
+            `.*.
+            *..
+            ***`);
+    });
+});
+
 const initializeGame : Function = (initial:string): GameOfLife => 
     new GameOfLife(PositionParser.parse(initial));
 
-// Any live cell with more than three live neighbours dies, as if by overcrowding.
 // Any live cell with two or three live neighbours lives on to the next generation.
 // You should write a program that can accept an arbitrary grid of cells, and will 
 // output a similar grid showing the next generation.

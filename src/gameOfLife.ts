@@ -12,7 +12,8 @@ export class GameOfLife {
         this._current.GetCells().forEach((rows) => {
             board.push(this.getRowFromBoard(rows));
         });
-        return new Position(board);
+        this._current = new Position(board);
+        return this._current;
     }
 
     private getRowFromBoard(rows: Cell[]): Cell[] {
