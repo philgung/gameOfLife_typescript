@@ -35,7 +35,6 @@ describe('GameOfLife - Acceptance tests', () => {
         expect(generation2.toString()).toBe(expectedOutput2);
         
         const generation3 = game.Generate();
-        //console.log(`generation3|${generation3.toString()}|`);
         const expectedOutput =
             `........
             ....*...
@@ -105,7 +104,6 @@ describe('Any live cell with more than three live neighboors dies, as if by over
                 .**`);
 
         const next = game.Generate();
-        console.log(`|${next.toString()}|`);
         expect(next.toString()).toBe(
             `.*.
             *..
@@ -117,8 +115,6 @@ const initializeGame : Function = (initial:string): GameOfLife =>
     new GameOfLife(PositionParser.parse(initial));
 
 // Any live cell with two or three live neighbours lives on to the next generation.
-// You should write a program that can accept an arbitrary grid of cells, and will 
-// output a similar grid showing the next generation.
 
 describe('Position tests', () =>{
    it('A cell with two live neighboors', () => {
